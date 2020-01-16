@@ -22,14 +22,10 @@ def p1_data():
     opioid=['Morphine','Methadone','Opium','Heroin','Oxycodone']
     
     _=data_deal.SubstanceName.isin(opioid) #某个元素是否在一类中要用isin
-    data_deal=pd.DataFrame({'is_opiod':_})
-    data_deal=pd.concat([data_deal,data_deal],axis=1) #列操作要加axis=1
+    _=pd.DataFrame({'is_opiod':_})
+    data_deal=pd.concat([data_deal,_],axis=1) #列操作要加axis=1
     
     data_deal.drop(columns='SubstanceName',inplace=True) #删除药品名称这一列
-    
-    data_clean=data_deal['DrugReports'].groupby([data_deal.YYYY,
-                        data_deal.FIPS_Combined,data_deal.is_opiod]).sum() #iloc按位置选择，loc按标签选择
-    
     data_clean=data_deal.groupby(['YYYY','FIPS_Combined','is_opiod'])[['DrugReports']].sum() #iloc按位置选择，loc按标签选择
     
     data_clean.reset_index(inplace=True) 
