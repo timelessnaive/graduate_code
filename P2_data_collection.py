@@ -20,19 +20,17 @@ def p2_data():
         data=county_y[year]
         res=data.drop(columns=['GEO.id','GEO.display-label'])#删除多余的列
         #res=res.rename(columns=res.iloc[0]) #删除表头的编号，如HC01_VC03
-        res.drop(index=0,inplace=True)
         
         l=[];col=res.columns
         for i in range(res.shape[1]):
             if('Margin' in res.iloc[0][i] or 'X' in res.iloc[1][i]):
                 l.append(col[i])
-        
+                
         res_=res.drop(columns=l)
+        res_.drop(index=0,inplace=True)
         res__=res_.apply(pd.to_numeric,errors='coerce') #errors='coerce'
         
-        res=res__.set_index(['GEO.id2'])#将州的编号作为index
-        
-        county_y[year]=res
+        county_y[year]=res__.set_index(['GEO.id2'])#将州的编号作为index
         
     return county_y
 

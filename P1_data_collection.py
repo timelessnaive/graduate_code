@@ -33,7 +33,7 @@ def p1_data():
     #地理位置坐标
     
     loc=pd.read_excel('C:/Users/Mr.rice/iCloudDrive/毕业/2018_MCMProblemC_DATA/C题经纬度数据.xlsx',sheet_name=1)
-    res=pd.concat([loc.FIPS_Combined,loc.LAT,loc.LNG],axis=1) #列合并
+    res=loc.loc[:,['FIPS_Combined','LAT','LNG']]
     loc=res.drop_duplicates()#去除重复的行
     # 合并数据，包括地理位置和每年上报人数
     
